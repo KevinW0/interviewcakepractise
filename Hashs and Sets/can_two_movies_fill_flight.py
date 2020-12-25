@@ -1,5 +1,41 @@
 import unittest
 
+
+"""One pass solution. 
+  def can_two_movies_fill_flight(movie_lengths, flight_length):
+    # Movie lengths we've seen so far
+    movie_lengths_seen = set()
+
+    for first_movie_length in movie_lengths:
+        matching_second_movie_length = flight_length - first_movie_length
+        if matching_second_movie_length in movie_lengths_seen:
+            return True
+        movie_lengths_seen.add(first_movie_length)
+
+    # We never found a match, so return False
+    return False
+
+"""
+
+"""
+The one pass solution works because..... 
+There is no loss of generality from which movie you hit first. 
+In other words, if you were to iterate across all movie lengths,
+you'd hit a 2 compliments. 
+
+So, this approach leverages that you might be hitting a compliment but
+not returning true yet because the corresponding movie pair hasnt been seen 
+yet.
+
+So yes, this means you might be increasing average runtime in iterating
+o(n). My solution will do O(2n) but will have a much larger space
+complexity (as you hash all other movies). But it also means it will return 
+true on the very first movie pair seen.
+
+
+"""
+
+
 def can_two_movies_fill_flight(movie_lengths, flight_length):
     sets={}
     for i in movie_lengths:
