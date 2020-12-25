@@ -1,3 +1,5 @@
+import unittest
+
 """
 Establishes an upper bound and lower bound
 
@@ -22,7 +24,7 @@ the meeting array and merging adjacent elements.
 
 O(n) for one pass adjacent array, o(n logn) for sort"""
 
-def merge_ranges(lst):
+def merge_ranges2(lst):
     condensed=[(lst[0][0],lst[0][1])]
     for tup in lst:
         lower=tup[0]
@@ -54,13 +56,13 @@ def merge_ranges(lst):
                 condensed[index]=(lower, upper2)
                 flag=True
                 break
-    print (condensed)
+    return condensed
 
 
 
 #One Pass solution
 
-def merge_ranges2(lst):
+def merge_ranges(lst):
     lst.sort(key=lambda x: x[0])
     condensed=[]
     for i in range(0, len(lst)):
@@ -75,13 +77,58 @@ def merge_ranges2(lst):
             lst[i+1]= ((lower, (max (upper, upper2))))
         else:
             condensed.append(lst[i])
-    print (condensed)
+    return condensed
             
 
 
 
 
 
-merge_ranges2(     [(1, 10), (2, 6), (3, 5), (7, 9)])
+# Tests
+
+class Test(unittest.TestCase):
+
+    def test_meetings_overlap(self):
+        actual = merge_ranges([(1, 3), (2, 4)])
+        expected = [(1, 4)]
+        self.assertEqual(actual, expected)
+
+    def test_meetings_touch(self):
+        actual = merge_ranges([(5, 6), (6, 8)])
+        expected = [(5, 8)]
+        self.assertEqual(actual, expected)
+
+    def test_meeting_contains_other_meeting(self):
+        actual = merge_ranges([(1, 8), (2, 5)])
+        expected = [(1, 8)]
+        self.assertEqual(actual, expected)
+
+    def test_meetings_stay_separate(self):
+        actual = merge_ranges([(1, 3), (4, 8)])
+        expected = [(1, 3), (4, 8)]
+        self.assertEqual(actual, expected)
+
+    def test_multiple_merged_meetings(self):
+        actual = merge_ranges([(1, 4), (2, 5), (5, 8)])
+        expected = [(1, 8)]
+        self.assertEqual(actual, expected)
+
+    def test_meetings_not_sorted(self):
+        actual = merge_ranges([(5, 8), (1, 4), (6, 8)])
+        expected = [(1, 4), (5, 8)]
+        self.assertEqual(actual, expected)
+
+    def test_one_long_meeting_contains_smaller_meetings(self):
+        actual = merge_ranges([(1, 10), (2, 5), (6, 8), (9, 10), (10, 12)])
+        expected = [(1, 12)]
+        self.assertEqual(actual, expected)
+
+    def test_sample_input(self):
+        actual = merge_ranges([(0, 1), (3, 5), (4, 8), (10, 12), (9, 10)])
+        expected = [(0, 1), (3, 8), (9, 12)]
+        self.assertEqual(actual, expected)
+
+
+unittest.main(verbosity=2)
 
 
