@@ -1,7 +1,42 @@
 import unittest
+"""Rough Idea:
+Determine the length of the string
+Push everything into a key:freq pair table
 
+if even, then all in the set should be 2 occurances
+if odd, up to one in the set should be 1 occurance 
 
+"""
+
+#retusns a bool
+def check_permutation(hashset, even):
+    flag = True
+    for key in hashset:
+        val = hashset.get(key, -1)
+        if val != 2:
+            if val == 1 and flag == True:
+                flag = False
+            else:
+                return False
+    return True
+
+                
 def has_palindrome_permutation(the_string):
+    even = (len(the_string) % 2 == 0)
+    hashtable = {}
+    for i in the_string:
+        val = hashtable.get(i, -1)
+        if val == -1:
+            hashtable[i] = 1
+        else:
+            hashtable[i] = val + 1
+    
+    return check_permutation(hashtable, even)
+
+    
+
+
+    
 
     # Check if any permutation of the input is a palindrome
     
