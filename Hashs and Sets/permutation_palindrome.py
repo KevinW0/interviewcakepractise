@@ -8,13 +8,21 @@ if odd, up to one in the set should be 1 occurance
 
 """
 
+
+
+"""
+Corrections:
+The middle letter might not exclusively show up once. you should check that it's odd
+letters might not only show up twice. change the val 2 check to be even occurances.
+"""
+
 #retusns a bool
 def check_permutation(hashset, even):
     flag = True
     for key in hashset:
         val = hashset.get(key, -1)
-        if val != 2:
-            if val == 1 and flag == True:
+        if val % 2 != 0: #is odd
+            if flag == True and even == False:
                 flag = False
             else:
                 return False
